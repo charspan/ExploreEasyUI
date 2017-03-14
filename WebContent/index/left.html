@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>left.html</title>
+</head>
+<body>
+	<div class="easyui-panel" style="border: none;">
+		<ul id="tt" class="easyui-tree"
+			data-options="
+				url: 'index/data.json?1',
+				method: 'get',
+				animate: true,
+				dnd: true,
+				onClick: function(node){
+					$(this).tree('beginEdit',node.target);
+				},
+				onContextMenu: function(e,node){
+					e.preventDefault();
+					$(this).tree('select',node.target);
+					$('#mm').menu('show',{
+						left: e.pageX,
+						top: e.pageY
+					});
+				}">
+		</ul>
+	</div>
+	<div id="mm" class="easyui-menu" style="width: 120px;">
+		<div onclick="seedetail()" data-options="iconCls:'icon-add'">查看内容</div>
+		<div class="menu-sep"></div>
+		<div onclick="append()" data-options="iconCls:'icon-add'">在此增加节点</div>
+		<div onclick="removeit()" data-options="iconCls:'icon-remove'">删除此节点</div>
+		<div onclick="expand()" data-options="iconCls:'icon-add'">展开此节点</div>
+		<div onclick="collapse()" data-options="iconCls:'icon-add'">关闭此节点</div>
+	</div>
+	<script type="text/javascript">
+		function append() {
+			var t = $('#tt');
+			var node = t.tree('getSelected');
+			t.tree('append', {
+				parent : (node ? node.target : null),
+				data : [ {
+					text : 'new item'
+				} ]
+			});
+		}
+		function removeit() {
+			var node = $('#tt').tree('getSelected');
+			console.log(node);
+			$('#tt').tree('remove', node.target);
+		}
+		function seedetail() {
+			var node = $('#tt').tree('getSelected');
+			$('#main').layout('panel', 'center').panel('open').panel('refresh',
+					'index.html');//node.text
+		}
+		function collapse() {
+			var node = $('#tt').tree('getSelected');
+			$('#tt').tree('collapse', node.target);
+		}
+		function expand() {
+			var node = $('#tt').tree('getSelected');
+			$('#tt').tree('expand', node.target);
+		}
+		$(function() {
+			/* $('#tt').tree({
+				data : window.localStorage.getItem("menuTree")
+			}); */
+			$('#tt').tree({
+				onSelect : function(node) {
+					//var menuTree = JSON.stringify($('#tt').tree('getRoots'));
+					//window.localStorage.setItem("menuTree", menuTree);
+					//console.log(menuTree);
+				}
+			});
+		});
+	</script>
+</body>
+</html>

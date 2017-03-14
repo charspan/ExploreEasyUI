@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>网关管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="css/welcome.css">
+<link rel="stylesheet" type="text/css"
+	href="js/jquery-easyui-1.5.1/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="js/jquery-easyui-1.5.1/themes/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="js/jquery-easyui-1.5.1/demo/demo.css">
+</head>
+<body>
+	<div id="main" class="easyui-layout"
+		style="width: 100%; height: 850px;">
+		<div data-options="region:'north'"
+			style="height: 143px; border: none; overflow: hidden;">
+			<img src="img/icon/logo.jpg" style="height: 100px;">
+			<menu class="ui-menu">
+				<li id="index" class="ui-menu-li ui-menu-li-curr">首页</li>
+				<li id="base" class="ui-menu-li">基本设置</li>
+				<li id="reboot" class="ui-menu-li">系统重启</li>
+				<ins class="ui-menu-del">KTS Server For Intergrations V3.72</ins>
+			</menu>
+		</div>
+		<div
+			data-options="region:'west',split:true,title:'导航栏',collapsible:false,href:'index/left.html'"
+			style="padding: 10px; width: 200px;"></div>
+		<div
+			data-options="region:'center',split:true,title:'内容展示',href:'index/center.html'"
+			style="width: 600px;"></div>
+		<div data-options="region:'south',split:true"
+			style="width: 100%; height: 50px; text-align: center; line-height: 40px; font-size: 18px;">欢迎使用网关管理系统</div>
+	</div>
+	<script src="js/common/jquery.min.js"></script>
+	<script src="js/jquery-easyui-1.5.1/jquery.easyui.min.js"></script>
+	<script>
+		$('.ui-menu li').each(function() {
+			$(this).click(function() {
+				$(".ui-menu .ui-menu-li-curr").removeClass("ui-menu-li-curr");
+				$(this).addClass("ui-menu-li-curr");
+				$('#main').layout('panel', 'west').panel('refresh',$(this).attr("id")+'/left.html');
+				$('#main').layout('panel', 'center').panel('refresh',$(this).attr("id")+'/center.html');
+			});
+		});
+	</script>
+</body>
+</html>
